@@ -1,0 +1,42 @@
+GET  http://localhost:1616/
+###
+
+GET  http://localhost:1616/marketing/4/5/6
+###
+
+###
+
+POST http://localhost:1616/add
+Content-Type: application/json
+
+{
+ "hospitalName":"Ascar Hospital",
+    "hospitalAddress":"Madurai",
+    "hospitalSpeciality":["ENT","Skin"]
+
+}
+
+
+###
+
+GET http://localhost:1616/
+
+###
+
+
+PUT http://localhost:1616/update
+Content-Type: application/json
+
+{
+    "hospitalName":"Likkash Hospitals",
+    "hospitalAddress":"Madurai",
+    "hospitalSpeciality":["eye","brain"]
+
+}
+
+###
+DELETE http://localhost:1616/delete/1
+
+
+###
+
