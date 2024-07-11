@@ -1,20 +1,20 @@
 ### PATIENT DETAILS
-GET http://localhost:1234/
+GET http://localhost:1234/hospital
 
 ### ADMIT
 
-POST http://localhost:1234/admit
+POST http://localhost:1234/hospital/admit
 Content-Type: application/json
 
 {
-    "patientId": 3030,
-    "patientName": "Gopi",
+    "patientId": 7070,
+    "patientName": "Garudan",
     "age": 33,
-    "bloodGroup": "A+",
-    "address": "Attur",
-    "contact": 92335649595,
-    "issue": "Cancer",
-    "status": "Discharged"
+    "bloodGroup": "AB+",
+    "address": "Chennai",
+    "contact": 91211447495,
+    "issue": "Tummor",
+    "status": "Admit"
 }
 
 
@@ -22,31 +22,30 @@ Content-Type: application/json
 
 ### FILTER
 
-GET http://localhost:1234/filter/patientName/Gopi
+GET http://localhost:1234/hospital/filter/patientName/Gopi
 
 
 ### UPDATE
 
-PUT http://localhost:1234/update/Cancer/Admit
+PUT http://localhost:1234/hospital/update/Cancer/Admit
 
 ###
 
-DELETE http://localhost:1234/erase/668e5b33ff058e177a1844ac
 
 ### DELETE
 
-DELETE http://localhost:1234/discharge/Gopi
+DELETE http://localhost:1234/hospital/discharge/Gopi
 
 ###
 
 ### DELETE BY AGE 
 
-DELETE http://localhost:1234/ageRemove/30
+DELETE http://localhost:1234/hospital/ageRemove/30
 
 ###
 
 ### DELETE BY STATUS
 
-DELETE http://localhost:1234/statusRemove/Admit
+DELETE http://localhost:1234/hospital/statusRemove/Admit
 
 ###

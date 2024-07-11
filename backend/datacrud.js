@@ -1,32 +1,27 @@
+require("./base")
 const express=require('express')
-const { default: mongoose } = require('mongoose')
+const router = express.Router()
 const details = require('./data&type')
 const bodyParser = require('body-parser')
 
-const exp = express()
+router.use(bodyParser.urlencoded({extended:true}))
+router.use(bodyParser.json())
 
-exp.use(bodyParser.urlencoded({extended:true}))
-exp.use(bodyParser.json())
-
-const uri = "mongodb+srv://dharunprakash:12345@cluster0.tttb0r3.mongodb.net/MEC?retryWrites=true&w=majority&appName=Cluster0";
-const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
-
-mongoose.connect(uri,clientOptions)
 
 // routers
 
 // ADMIT
 
-exp.post("/admit",async(request,response)=>{
+router.post("/admit",async(request,response)=>{
     const newpatient = new details(request.body)
     await newpatient.save()
     response.json(newpatient)
 })
 
-// 
+//  
 
 // Discharge the patient using Name
-exp.delete('/discharge/:patientName',async(request,response)=>{
+router.delete('/discharge/:patientName',async(request,response)=>{
     const result = await details.deleteMany({patientName:{'$eq':request.params.patientName}})
     response.json(result)
 })
@@ -35,7 +30,7 @@ exp.delete('/discharge/:patientName',async(request,response)=>{
 
 //Update Status By Issue
 
-exp.put('/update/:issue/:status',async(request,response)=>{
+router.put('/update/:issue/:status',async(request,response)=>{
     const data = await details.updateMany({issue:{'$eq':request.params.issue}},{status:request.params.status})
     response.json(data)
 })
@@ -44,7 +39,7 @@ exp.put('/update/:issue/:status',async(request,response)=>{
 
 // Filter Details
 
-exp.get('/filter/:variable/:value', async (request, response) => {
+router.get('/filter/:variable/:value', async (request, response) => {
     const variable = request.params.variable;
     const value = request.params.value;
 
@@ -55,12 +50,12 @@ exp.get('/filter/:variable/:value', async (request, response) => {
         console.log('Found:', found);
         response.json(found);
 
-});
+});     
 
 // 
 
 // Discharge the patient using Name
-exp.delete('/ageRemove/:age',async(request,response)=>{
+router.delete('/ageRemove/:age',async(request,response)=>{
     const result = await details.deleteMany({age:{'$gte':request.params.age}})
     response.json(result)
 })
@@ -68,7 +63,7 @@ exp.delete('/ageRemove/:age',async(request,response)=>{
 // 
 
 // Discharge the patient using Name
-exp.delete('/statusRemove/:status',async(request,response)=>{
+router.delete('/statusRemove/:status',async(request,response)=>{
     const result = await details.deleteMany({status:{'$eq':request.params.status}})
     response.json(result)
 })
@@ -77,12 +72,10 @@ exp.delete('/statusRemove/:status',async(request,response)=>{
 
 
 // Patient Details
-exp.get('/',async(request,response)=>{
+router.get('/',async(request,response)=>{
     const tracks = await details.find()
     response.json(tracks)
 })
 // 
 
-exp.listen(1234,()=>{
-    console.log("express connected!!!!!!!!!!!")
-})
+module.exports=router

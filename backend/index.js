@@ -1,21 +1,17 @@
-const express = require('express');
-const { Aggregate } = require('mongoose');
-const app = express();
+const express = require('express')
+const data = require("./datacrud")
+const path = require('path');
 
-// const content = {"name":"Likkash",
-//   "pair":"sabiri"
-// }
+const exp = express()
 
-// const html = ("<h1 style ='color:green'>LIKKKASH</h1>")
+exp.use("/hospital",data)
+exp.use(express.static(path.join(__dirname, '../backend/api/build')));
 
-
-// app.get('/',async(req,res)=>{res.send(html  )})
-
-// app.get('/marketing/:mrp/:discount/:sploffer',async(req,res)=>{
-//   let success= (req.params.mrp)-(req.params.discount)-(req.params.sploffer );
-//   res.json({success})
-
-// }) 
-app.listen(1616, () => {
-  console.log("server online");
+exp.get('*', async(request, response) => {
+    response.sendFile(path.join(__dirname, '../backend/api/build/index.html'));
 });
+
+
+exp.listen(1234,()=>{
+    console.log("express connected!!!!!!!!!!!")
+})
