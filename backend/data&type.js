@@ -11,5 +11,5 @@ var logSchema=new mongoose.Schema({
     status: {type:String}
 })
 
-const patientDetails = mongoose.model('patientDetails',logSchema)
-module.exports=patientDetails
+const hospitals = mongoose.model('hospitals',logSchema)
+module.exports=hospitals
