@@ -28,6 +28,14 @@ router.delete('/discharge/:patientName',async(request,response)=>{
 
 // 
 
+// Discharge the patient using ID
+router.delete('/delete/:id',async(request,response)=>{
+    const result = await details.findOneAndDelete({_id:{'$eq':request.params.id}})
+    response.json(result)
+})
+
+// 
+
 //Update Status By Issue
 
 router.put('/update/:issue/:status',async(request,response)=>{
@@ -77,5 +85,25 @@ router.get('/',async(request,response)=>{
     response.json(tracks)
 })
 // 
+
+
+// Update using ID
+
+router.put('/',async(request,response)=>{
+    const data = await details.findByIdAndUpdate(id=request.body._id,request.body,{new:false})
+    console.log(JSON.stringify(data))
+    response.json(data)
+})
+
+// 
+
+// GET BY ID
+router.get('/:id',async(request,response)=>{
+    const consignment = await details.findById(id=request.params.id)
+    response.json(consignment)
+})
+
+// 
+
 
 module.exports=router

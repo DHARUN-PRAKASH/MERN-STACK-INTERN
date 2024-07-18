@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Container from '@mui/material/Container';
 import BackspaceIcon from '@mui/icons-material/Backspace';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
@@ -7,21 +7,21 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { callPost } from "./axios";
+import { callFetchOne, callPost, callUpdate } from "./axios";
 import Grid from '@mui/material/Grid';
 import InputLabel from '@mui/material/InputLabel';
 import { FormControl } from "@mui/material";
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import img from './logo.jpg'
+import { useNavigate, useParams } from "react-router-dom";
 
 
-export const App = () => {
+
+
+
+export const Update = () => {
+
+    const{id}=useParams()
   const [logistics, setLogistics] = useState({
+    _id:0,
     patientId: 0,
     patientName: "",
     age: 0,
@@ -39,36 +39,36 @@ export const App = () => {
       [name]: value
     }));
   };
+  const navi=useNavigate()
 
   const publish = async () => {
-    const t = await callPost(logistics);
+    const t = await callUpdate(logistics);
     alert(JSON.stringify(t.data));
+    navi('/')
+
   };
+
+  const gatherInfo=async()=>{
+    const t = await callFetchOne(id)
+    setLogistics(t.data)
+    
+}
+  useEffect(()=>{
+    gatherInfo()
+},[])
 
   return (
     <div>
-            <AppBar position="fixed" style={{backgroundColor: '#1e2772'}}>
-        <Toolbar variant="dense">
-          <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-            <MenuIcon />
-          </IconButton>
-          <img
-                  src={img}
-                  alt="img"
-                 fullWidth
-                 height="75"
-              
-                />
-        </Toolbar>
-      </AppBar>
+     
       <div className="row justify-content-center">
-        <div className="col-12 col-md-8 col-lg- rounded-2 shadow-lg " style={{ marginTop: '10px'  , padding: '20px',marginTop:'90px',}}>
+        <div className="col-12 col-md-8 col-lg- rounded-2 shadow-lg " style={{ marginTop: '50px' }}>
           
           <Grid container spacing={2}>
           <Grid item xs={12} md={6} lg={6} >
               <TextField
               style={{color:'#1e2772'}}
                 fullWidth
+              
                 onChange={collecting}
                 name="patientId"
                 value={logistics.patientId}

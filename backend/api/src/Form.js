@@ -11,6 +11,7 @@ import { callPost } from "./axios";
 import Grid from '@mui/material/Grid';
 import InputLabel from '@mui/material/InputLabel';
 import { FormControl } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -18,7 +19,7 @@ import Typography from '@mui/material/Typography';
 
 
 
-export const App = () => {
+export const Form = () => {
   const [logistics, setLogistics] = useState({
     patientId: null,
     patientName: "",
@@ -37,10 +38,13 @@ export const App = () => {
       [name]: value
     }));
   };
+  const navi=useNavigate()
 
   const publish = async () => {
     const t = await callPost(logistics);
     alert(JSON.stringify(t.data));
+    navi('/')
+
   };
 
   return (
